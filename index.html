@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanPro - Gestion de projets avec métriques</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">🚀 KanbanPro</div>
+            <div class="workspace-controls">
+                <select class="workspace-dropdown" id="workspaceSelect" onchange="switchWorkspace()">
+                    <option value="projet-web">🌐 Projet Web</option>
+                    <option value="marketing">📈 Marketing</option>
+                </select>
+                <button class="workspace-add-btn" onclick="createWorkspace()">➕</button>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" onclick="openDashboard()">📊 Dashboard</button>
+            <button class="header-btn" onclick="openAdminPanel()">⚙️ Admin</button>
+            <button class="header-btn logout-btn" onclick="logout()">🚪 Déco</button>
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <div class="board-container" id="boardContainer">
+            <div class="swimlane-container" id="swimlaneContainer">
+                <!-- Swimlanes will be rendered here -->
+            </div>
+        </div>
+
+        <!-- Dashboard Container -->
+        <div class="dashboard-container" id="dashboardContainer" style="display: none;">
+            <div class="dashboard-header">
+                <div>
+                    <div class="dashboard-title">📊 Métriques Kanban</div>
+                    <div id="dashboardWorkspace">Workspace actuel</div>
+                </div>
+                <div class="dashboard-controls">
+                    <input type="date" class="date-picker" id="dashboardStartDate">
+                    <input type="date" class="date-picker" id="dashboardEndDate">
+                    <button class="refresh-btn" onclick="refreshDashboard()">🔄 Actualiser</button>
+                    <button class="btn-secondary" onclick="closeDashboard()">✕ Fermer</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid" id="dashboardGrid">
+                <!-- Metrics cards will be rendered here -->
+            </div>
+        </div>
+
+        <div class="activity-panel" id="activityPanel">
+            <div class="activity-header">
+                <h3>📊 Activité du Workspace</h3>
+            </div>
+            <div class="activity-content">
+                <div id="activitiesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Modal -->
+    <div id="cardModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="cardModalTitle">📝 Nouvelle tâche</h3>
+                <button class="close-btn" onclick="closeModal('cardModal')">&times;</button>
+            </div>
+            <form id="cardForm">
+                <div class="form-group">
+                    <label class="form-label" for="cardTitle">Titre de la tâche *</label>
+                    <input type="text" class="form-input" id="cardTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="cardDescription">Description</label>
+                    <textarea class="form-input" id="cardDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="cardAuthor">Assigné à</label>
+                        <select class="form-input" id="cardAuthor">
+                            <option value="">Non assigné</option>
+                            <option value="Marie Dupont">Marie Dupont</option>
+                            <option value="Jean Martin">Jean Martin</option>
+                            <option value="Sophie Bernard">Sophie Bernard</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="cardPriority">Priorité</label>
+                        <select class="form-input" id="cardPriority">
+                            <option value="low">🟢 Basse</option>
+                            <option value="medium">🟡 Moyenne</option>
+                            <option value="high">🔴 Haute</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="cardEstimation">Estimation (heures)</label>
+                        <input type="number" class="form-input" id="cardEstimation" min="0" step="0.5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="cardActualTime">Temps réel (heures)</label>
+                        <input type="number" class="form-input" id="cardActualTime" min="0" step="0.5">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('cardModal')">Annuler</button>
+                    <button type="submit" class="btn btn-primary" id="cardSubmitBtn">Créer la tâche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">⚙️ Administration</h3>
+                <button class="close-btn" onclick="closeModal('adminModal')">&times;</button>
+            </div>
+            <p>Panneau d'administration en cours de développement...</p>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('adminModal')">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
